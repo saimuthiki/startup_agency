@@ -1,0 +1,13 @@
+{
+  "name": "startup-agency",
+  "version": "1.0.0",
+  "description": "AI Website Agency — automated website generation for local businesses",
+  "scripts": {
+    "process-leads": "node scripts/process-csv.js",
+    "check-whatsapp": "node scripts/check-whatsapp.js"
+  },
+  "dependencies": {
+    "csv-parse": "^5.5.0",
+    "xlsx": "^0.18.5"
+  }
+}
