@@ -85,47 +85,59 @@ gh repo create {business-slug}-website --public --source=. --push
 |--------|------|---------------|-------------|
 | Nandi Food Plaza | nandi-food-plaza | https://nandi-food-plaza.pages.dev | https://github.com/saimuthiki/nandi-food-plaza-website |
 
-## WhatsApp Outreach
+## Sales Pipeline (FOLLOW THIS EXACTLY)
 
-### Tool: WA Sender (SheetWA) Chrome Extension
-- Free Chrome extension: https://sheetwa.com
-- Works with WhatsApp Web (no API needed)
-- Sends from Google Sheets
+### Phase 1: Cold Outreach (wa.me links — manual, no extension needed)
+- Generate links: `node scripts/generate-outreach-links.js 10`
+- Each link opens WhatsApp with personalized message pre-filled
+- Message shows the SAMPLE URL (nandi-food-plaza.pages.dev) as a demo
+- Quotes a price (₹5,000 intro / ₹8,000 standard)
+- Does NOT give away a free custom site — only the shared demo
+- Send 10-15 messages per day manually via wa.me links
+- Track responses in reports/outreach-tracker.csv
 
-### Message Template (use with WA Sender)
-```
-🙏 Namaste {name} ji,
+### Phase 2: Response Handling (manual — you do this)
+- When a business replies "YES" or shows interest:
+  1. Send them more details about the service
+  2. Negotiate price (₹5,000-₹12,000 based on scope)
+  3. Collect 50% advance via UPI/GPay
+  4. Tell Claude Code: "Build website for {business name}"
 
-I noticed your business has excellent {rating}★ reviews on Google Maps — impressive!
+### Phase 3: Build & Deliver (Claude Code does this — AUTOMATED)
+When you say "Build website for {business name}":
+1. Claude reads the lead data from qualified-leads.json
+2. Builds a premium interactive website in clients/{slug}/
+3. Git commits + pushes to GitHub
+4. Deploys to Cloudflare Pages
+5. Reports the live URL: https://{slug}.pages.dev
+6. You share the URL with the client for approval
 
-I build professional websites for businesses like yours. I've already created a sample:
+### Phase 4: Revisions & Handover (semi-automated)
+- Client asks for changes → You tell Claude → Claude edits + redeploys
+- Once approved → Set up custom domain if client has one
+- Collect remaining 50% payment
+- Offer ₹1,500/month maintenance plan
 
-🌐 https://{slug}.pages.dev
+### Pricing (Market Standard for AP/India)
+| Package | Price | What's Included |
+|---------|-------|----------------|
+| Starter (intro offer) | ₹5,000 | Single page website + Cloudflare hosting + WhatsApp button |
+| Standard | ₹8,000 | Multi-section website + SEO + Google Maps + Gallery |
+| Premium | ₹12,000 | Everything + AI images + Custom domain setup + 3 months maintenance |
+| Maintenance | ₹1,500/month | Hosting + updates + minor changes |
 
-A website helps customers:
-✅ Find your address and call directly
-✅ See your services with photos
-✅ Contact you on WhatsApp with one tap
-✅ Find you on Google Search
+### Sample Demo URL (shared with ALL cold outreach)
+https://nandi-food-plaza.pages.dev
 
-Special offer: ₹5,000 one-time (no monthly charges for first year).
-
-Would you like to see a personalized version for {name}?
-Reply "YES" and I'll build it! 🙌
-
-Reply STOP to opt out.
-```
-
-### Anti-Ban Rules
+### Anti-Ban Rules for WhatsApp
 1. Use separate SIM (₹100), not primary
 2. Warm up 1-2 weeks first
 3. Start 10-15/day → scale to 30-50/day by week 3
-4. 30-60 second random delays between messages
-5. Personalize EVERY message with business name + rating
-6. Send during business hours only (10AM-7PM IST)
+4. Personalize EVERY message with business name + rating
+5. Send during business hours only (10AM-7PM IST)
 
 ### WhatsApp outreach is NOT automatable by Claude Code
-Use WA Sender Chrome extension manually. Claude Code builds websites + deploys.
+Use wa.me links manually. Claude Code only builds websites + deploys.
 
 ## Gemini API Key
 Stored in .env file. Key: AIzaSyAm-GNWN845cuqhn-ZIy2PqranMFPMIujQ
