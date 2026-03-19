@@ -44,12 +44,100 @@ When I provide a CSV file:
 - Write content in English, but consider adding Telugu option later
 - Each website should look UNIQUE — vary colors, layouts, fonts per client
 
+## Deployment Workflow (ALWAYS FOLLOW THIS)
+
+After ANY change to a client website, ALWAYS do these 3 steps automatically:
+
+### Step 1: Save changes to GitHub
+```bash
+cd D:/claude_code_mastery_real/startup_agency/clients/{business-slug}
+git add -A
+git commit -m "Update: {description of changes}"
+git push origin master
+```
+
+### Step 2: Deploy to Cloudflare Pages
+```bash
+npx wrangler pages deploy . --project-name={business-slug}
+```
+
+### Step 3: Confirm the live URL
+Report: "Updated and deployed to https://{business-slug}.pages.dev"
+
+### For NEW clients (first-time setup):
+```bash
+# 1. Create Cloudflare project
+npx wrangler pages project create {business-slug}
+
+# 2. Deploy
+npx wrangler pages deploy clients/{business-slug}/ --project-name={business-slug}
+
+# 3. Create GitHub repo
+cd clients/{business-slug}/
+git init && git add . && git commit -m "Website for {business-name}"
+gh repo create {business-slug}-website --public --source=. --push
+
+# 4. Report the live URL
+```
+
+### Active Client Deployments
+| Client | Slug | Cloudflare URL | GitHub Repo |
+|--------|------|---------------|-------------|
+| Nandi Food Plaza | nandi-food-plaza | https://nandi-food-plaza.pages.dev | https://github.com/saimuthiki/nandi-food-plaza-website |
+
+## WhatsApp Outreach
+
+### Tool: WA Sender (SheetWA) Chrome Extension
+- Free Chrome extension: https://sheetwa.com
+- Works with WhatsApp Web (no API needed)
+- Sends from Google Sheets
+
+### Message Template (use with WA Sender)
+```
+🙏 Namaste {name} ji,
+
+I noticed your business has excellent {rating}★ reviews on Google Maps — impressive!
+
+I build professional websites for businesses like yours. I've already created a sample:
+
+🌐 https://{slug}.pages.dev
+
+A website helps customers:
+✅ Find your address and call directly
+✅ See your services with photos
+✅ Contact you on WhatsApp with one tap
+✅ Find you on Google Search
+
+Special offer: ₹5,000 one-time (no monthly charges for first year).
+
+Would you like to see a personalized version for {name}?
+Reply "YES" and I'll build it! 🙌
+
+Reply STOP to opt out.
+```
+
+### Anti-Ban Rules
+1. Use separate SIM (₹100), not primary
+2. Warm up 1-2 weeks first
+3. Start 10-15/day → scale to 30-50/day by week 3
+4. 30-60 second random delays between messages
+5. Personalize EVERY message with business name + rating
+6. Send during business hours only (10AM-7PM IST)
+
+### WhatsApp outreach is NOT automatable by Claude Code
+Use WA Sender Chrome extension manually. Claude Code builds websites + deploys.
+
+## Gemini API Key
+Stored in .env file. Key: AIzaSyAm-GNWN845cuqhn-ZIy2PqranMFPMIujQ
+
 ## Project Structure
-- leads/ — CSV files of business leads
-- clients/ — Generated websites per client
+- leads/ — CSV files of business leads (qualified-leads.json has 4,936 leads)
+- clients/ — Generated websites per client (each folder = one client)
 - templates/ — Reference designs by category
 - scripts/ — Automation scripts (CSV processing, image generation, deployment)
 - assets/ — Shared assets (icons, fonts)
 - reports/ — Build reports and outreach tracking
-- .claude/skills/ — Skill knowledge files
-- .claude/agents/ — Agent definitions
+- .claude/skills/ — 1,196 skill knowledge files
+- .claude/agents/ — 380 agent definitions
+- .claude/mcps/ — 42 MCP server configs
+- .claude/hooks/ — 24 hook configs
