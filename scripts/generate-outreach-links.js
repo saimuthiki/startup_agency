@@ -43,34 +43,34 @@ batch.forEach((lead, i) => {
   const phoneClean = phone.startsWith('91') ? phone : '91' + phone;
   const shortName = lead.name.length > 35 ? lead.name.substring(0, 35) : lead.name;
 
-  const msg = `Hi ${shortName} ji! 🙏
+  const reviewLine = lead.reviews > 100
+    ? `Google Maps లో ${lead.reviews.toLocaleString()}+ reviews, ${lead.rating}★ rating — మీ customers మిమ్మల్ని చాలా నమ్ముతున్నారు! 👏`
+    : `Google Maps లో మీ ${lead.category.toLowerCase()} చూశాను — ${lead.city} లో మంచి business నడుపుతున్నారు!`;
 
-${lead.reviews > 100 ? `Wow — ${lead.reviews.toLocaleString()}+ Google reviews with ${lead.rating}★! Your customers clearly love what you do.` : `Your ${lead.category.toLowerCase()} in ${lead.city} caught my attention on Google Maps.`}
+  const msg = `🙏 ${shortName} గారు,
 
-Quick question — have you thought about having your own website?
+${reviewLine}
 
-Today 70% of customers search online before visiting any shop. Without a website, you're invisible to them. Your competitors who have websites are getting those customers.
+ఒక్క question — మీకు website ఉందా?
 
-I recently built this for a business just like yours:
-👉 ${SAMPLE_URL}
-(Open it — takes 5 seconds. See how professional it looks!)
+ఇప్పుడు 70% customers shop కి రాకముందు online లో search చేస్తారు. Website లేకపోతే వాళ్ళకి మీరు కనిపించరు. మీ competitors websites ఉన్నాయి — ఆ customers వాళ్ళ దగ్గరకి వెళ్తున్నారు.
 
-What you get:
-📱 Mobile-friendly website your customers love
-📍 Google Maps so people find you easily
-💬 WhatsApp button — customers message you in 1 tap
-⭐ Your reviews & ratings showcased
-📸 Beautiful photo gallery of your business
-🔍 SEO — show up when people Google "${lead.category.toLowerCase()} in ${lead.city}"
+ఇలాంటి business కోసం నేను recently build చేసిన website చూడండి 👇
+🌐 ${SAMPLE_URL}
+(5 seconds లో open చేయండి — ఎంత professional గా ఉందో చూడండి!)
 
-💰 One-time investment: starts at just ₹5,000
-(No monthly fees for the first year. Price is negotiable!)
+మీకు ఏం దొరుకుతుంది:
+📱 Mobile-friendly website
+📍 Google Maps location
+💬 WhatsApp button — 1 tap లో customers message చేస్తారు
+🔍 "${lead.category.toLowerCase()} in ${lead.city}" అని Google లో search చేస్తే మీరు కనిపిస్తారు
 
-This is a one-time cost that brings you customers 24/7, 365 days. Think of it — even if just 2-3 new customers find you through the website every month, it pays for itself many times over.
+💰 One-time investment: ₹5,000 నుండి (negotiable)
+Monthly charges లేవు. ఒక్కసారి invest చేస్తే 24/7 customers వస్తారు.
 
-Interested? Just reply YES — I'll create a free mockup for your business to show you how it looks. No payment needed to see the demo.
+ఆసక్తి ఉంటే నాకు message చేయండి — మీ business కోసం free demo చూపిస్తాను 🙌
 
-- Sai, Web Designer`;
+— Sai, Web Designer`;
 
   const link = `https://wa.me/${phoneClean}?text=${encodeURIComponent(msg)}`;
 
