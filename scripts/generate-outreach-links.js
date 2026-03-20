@@ -44,33 +44,31 @@ batch.forEach((lead, i) => {
   const shortName = lead.name.length > 35 ? lead.name.substring(0, 35) : lead.name;
 
   const reviewLine = lead.reviews > 100
-    ? `Google Maps లో ${lead.reviews.toLocaleString()}+ reviews, ${lead.rating}★ rating — మీ customers మిమ్మల్ని చాలా నమ్ముతున్నారు! 👏`
-    : `Google Maps లో మీ ${lead.category.toLowerCase()} చూశాను — ${lead.city} లో మంచి business నడుపుతున్నారు!`;
+    ? `Google Maps లో మీకు ${lead.reviews.toLocaleString()}+ reviews ఉన్నాయి, ${lead.rating}★ rating — చాలా మంచి business నడుపుతున్నారు! 👏`
+    : `${lead.city} లో మీ ${lead.category.toLowerCase()} Google Maps లో చూశాను.`;
 
   const msg = `🙏 ${shortName} గారు,
 
 ${reviewLine}
 
-ఒక్క question — మీకు website ఉందా?
+ఒక్క question — మీకు own website ఉందా?
 
-ఇప్పుడు 70% customers shop కి రాకముందు online లో search చేస్తారు. Website లేకపోతే వాళ్ళకి మీరు కనిపించరు. మీ competitors websites ఉన్నాయి — ఆ customers వాళ్ళ దగ్గరకి వెళ్తున్నారు.
+ఇప్పుడు చాలా మంది customers shop కి రాకముందు online లో search చేస్తారు. Website ఉంటే:
+📱 మీ business details, photos, menu అంతా ఒక్క చోట కనిపిస్తాయి
+📍 Google Maps లో మీ location directly చూస్తారు
+📞 ఒక్క click తో మీకు call/message చేయగలరు
 
-ఇలాంటి business కోసం నేను recently build చేసిన website చూడండి 👇
+Website లేకపోతే ఈ customers అందరూ మీ competitors దగ్గరకి వెళ్తారు.
+
+ఇలాంటి business కోసం నేను recently build చేసిన website ఒకసారి చూడండి 👇
 🌐 ${SAMPLE_URL}
-(5 seconds లో open చేయండి — ఎంత professional గా ఉందో చూడండి!)
 
-మీకు ఏం దొరుకుతుంది:
-📱 Mobile-friendly website
-📍 Google Maps location
-💬 WhatsApp button — 1 tap లో customers message చేస్తారు
-🔍 "${lead.category.toLowerCase()} in ${lead.city}" అని Google లో search చేస్తే మీరు కనిపిస్తారు
+💰 ₹5,000 నుండి (negotiable) — ఒక్కసారి invest చేస్తే చాలు, monthly charges లేవు.
 
-💰 One-time investment: ₹5,000 నుండి (negotiable)
-Monthly charges లేవు. ఒక్కసారి invest చేస్తే 24/7 customers వస్తారు.
+Details కోసం నాకు message చేయండి 🙌
 
-ఆసక్తి ఉంటే నాకు message చేయండి — మీ business కోసం free demo చూపిస్తాను 🙌
-
-— Sai, Web Designer`;
+— Sai, Web Designer
+📞 +91 XXXXXXXXXX`;
 
   const link = `https://wa.me/${phoneClean}?text=${encodeURIComponent(msg)}`;
 
