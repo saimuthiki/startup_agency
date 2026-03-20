@@ -9,7 +9,6 @@ const filter = (process.argv[4] || '').toLowerCase();
 const SAMPLE_URL = 'https://nandi-food-plaza.pages.dev';
 const TRACKER_PATH = path.resolve('reports/outreach-tracker.csv');
 
-// Filter by city or category if provided
 let leads = allLeads;
 if (filter) {
   leads = allLeads.filter(l =>
@@ -23,18 +22,16 @@ if (filter) {
 const batch = leads.slice(startFrom, startFrom + count);
 
 if (batch.length === 0) {
-  console.log('\nNo more leads in this range. Try a different offset or filter.');
+  console.log('\nNo more leads in this range.');
   process.exit(0);
 }
 
 console.log(`\n${'='.repeat(60)}`);
-console.log(`  WhatsApp Outreach Links — ${batch.length} leads`);
-console.log(`  Range: #${startFrom + 1} to #${startFrom + batch.length} ${filter ? `(filter: ${filter})` : '(all leads)'}`);
-console.log(`  Sample URL: ${SAMPLE_URL}`);
+console.log(`  WhatsApp Outreach — ${batch.length} leads`);
+console.log(`  Range: #${startFrom + 1} to #${startFrom + batch.length}`);
 console.log(`${'='.repeat(60)}\n`);
 
 const csvRows = [];
-// Create header if file doesn't exist
 if (!fs.existsSync(TRACKER_PATH)) {
   csvRows.push('name,phone,city,category,rating,reviews,whatsapp_link,date_generated,status');
 }
@@ -44,31 +41,36 @@ const today = new Date().toISOString().split('T')[0];
 batch.forEach((lead, i) => {
   const phone = lead.phone.replace(/[^0-9]/g, '').replace(/^0+/, '');
   const phoneClean = phone.startsWith('91') ? phone : '91' + phone;
-  const shortName = lead.name.length > 30 ? lead.name.substring(0, 30) : lead.name;
+  const shortName = lead.name.length > 35 ? lead.name.substring(0, 35) : lead.name;
 
-  const msg = `🙏 Namaste ${shortName} ji,
+  const msg = `Hi ${shortName} ji! 🙏
 
-Your ${lead.category.toLowerCase()} has an amazing ${lead.reviews.toLocaleString()}+ reviews with ${lead.rating}★ on Google Maps — that shows real customer trust!
+${lead.reviews > 100 ? `Wow — ${lead.reviews.toLocaleString()}+ Google reviews with ${lead.rating}★! Your customers clearly love what you do.` : `Your ${lead.category.toLowerCase()} in ${lead.city} caught my attention on Google Maps.`}
 
-I'm a professional web designer and I build modern websites for successful businesses like yours in ${lead.city}.
+Quick question — have you thought about having your own website?
 
-Here's a sample of the kind of website I create:
-🌐 ${SAMPLE_URL}
+Today 70% of customers search online before visiting any shop. Without a website, you're invisible to them. Your competitors who have websites are getting those customers.
 
-This has interactive menus, photo gallery, Google Maps, WhatsApp button, and works beautifully on mobile.
+I recently built this for a business just like yours:
+👉 ${SAMPLE_URL}
+(Open it — takes 5 seconds. See how professional it looks!)
 
-For ${shortName}, I can build a personalized website like this with:
-✅ Your menu/services with photos
-✅ Customer reviews showcase
-✅ WhatsApp click-to-chat button
-✅ Google Maps location
-✅ SEO so customers find you on Google
+What you get:
+📱 Mobile-friendly website your customers love
+📍 Google Maps so people find you easily
+💬 WhatsApp button — customers message you in 1 tap
+⭐ Your reviews & ratings showcased
+📸 Beautiful photo gallery of your business
+🔍 SEO — show up when people Google "${lead.category.toLowerCase()} in ${lead.city}"
 
-💰 Introductory price: just ₹5,000 one-time (no monthly fees for 1st year).
+💰 One-time investment: starts at just ₹5,000
+(No monthly fees for the first year. Price is negotiable!)
 
-Interested? Just reply "YES" and I'll share more details.
+This is a one-time cost that brings you customers 24/7, 365 days. Think of it — even if just 2-3 new customers find you through the website every month, it pays for itself many times over.
 
-Reply STOP to opt out.`;
+Interested? Just reply YES — I'll create a free mockup for your business to show you how it looks. No payment needed to see the demo.
+
+- Sai, Web Designer`;
 
   const link = `https://wa.me/${phoneClean}?text=${encodeURIComponent(msg)}`;
 
@@ -81,13 +83,11 @@ Reply STOP to opt out.`;
   csvRows.push(`"${lead.name.replace(/"/g, '""')}","${lead.phone}","${lead.city}","${lead.category}",${lead.rating},${lead.reviews},"${link}","${today}","pending"`);
 });
 
-// Write/append tracker
 if (csvRows.length > 0) {
   if (!fs.existsSync(TRACKER_PATH)) {
     fs.writeFileSync(TRACKER_PATH, csvRows.join('\n') + '\n');
   } else {
     const existingData = fs.readFileSync(TRACKER_PATH, 'utf8');
-    // Skip rows that already exist (by phone number)
     const existingPhones = new Set(existingData.split('\n').map(row => {
       const match = row.match(/"(\+?\d[\d\s]+)"/);
       return match ? match[1] : '';
@@ -104,13 +104,6 @@ if (csvRows.length > 0) {
 }
 
 console.log(`\n${'─'.repeat(60)}`);
-console.log(`💡 HOW TO USE:`);
-console.log(`   1. Click each 🔗 link (or copy to phone browser)`);
-console.log(`   2. WhatsApp opens with message pre-filled → Hit Send`);
-console.log(`   3. When someone replies YES → tell Claude "Build website for {name}"`);
-console.log(`\n📌 COMMANDS:`);
-console.log(`   Next batch:        node scripts/generate-outreach-links.js ${count} ${startFrom + count}${filter ? ' ' + filter : ''}`);
-console.log(`   Filter by city:    node scripts/generate-outreach-links.js 10 0 visakhapatnam`);
-console.log(`   Filter by type:    node scripts/generate-outreach-links.js 10 0 salon`);
-console.log(`   All restaurants:   node scripts/generate-outreach-links.js 20 0 restaurant`);
+console.log(`💡 Click each 🔗 link → WhatsApp opens → Hit Send`);
+console.log(`📌 Next batch: node scripts/generate-outreach-links.js ${count} ${startFrom + count}${filter ? ' ' + filter : ''}`);
 console.log(`${'─'.repeat(60)}\n`);
