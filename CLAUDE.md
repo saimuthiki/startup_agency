@@ -140,7 +140,7 @@ https://nandi-food-plaza.pages.dev
 Use wa.me links manually. Claude Code only builds websites + deploys.
 
 ## Gemini API Key
-Stored in .env file. Key: AIzaSyAm-GNWN845cuqhn-ZIy2PqranMFPMIujQ
+Stored in .env file. Key: AIzaSyAm-GNWN845cuqhn-ZIy2PqranMFP
 
 ## Project Structure
 - leads/ — CSV files of business leads (qualified-leads.json has 4,936 leads)
